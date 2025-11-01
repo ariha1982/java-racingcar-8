@@ -3,35 +3,43 @@ package racingcar.utils;
 import java.util.List;
 
 public class Validator {
-    public void isCarNameBlank(String input) {
-        if (input.isBlank()) { throw new IllegalArgumentException(); }
+    public static void isCarNameBlank(String input) {
+        if (input.isBlank()) { throw new IllegalArgumentException(ErrorCode.INPUT_CANT_BLANK); }
     }
 
-    public void hasDuplicateName(List<String> inputNames) {
+    public static void isNameLengthValid(List<String> names) {
+        names.forEach(name -> {
+            if (name.length() >= 6) {
+                throw new IllegalArgumentException(ErrorCode.NAME_TOO_LONG);
+            }
+        });
+    }
+
+    public static void hasDuplicateName(List<String> inputNames) {
         long distinctCount = inputNames.stream().distinct().count();
-        if (inputNames.size() != distinctCount) { throw new IllegalArgumentException(); }
+        if (inputNames.size() != distinctCount) { throw new IllegalArgumentException(ErrorCode.DUPLICATE_NOT_ALLOWED); }
     }
 
-    public Integer isValidRound(String round) {
+    public static Integer isValidRound(String round) {
         if (round == null || round.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorCode.INPUT_CANT_BLANK);
         }
 
         int roundInt;
         if (isNumber(round)) {
             roundInt = Integer.parseInt(round);
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorCode.INVALID_ROUND);
         }
 
         if (roundInt <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorCode.INVALID_ROUND);
         }
 
         return roundInt;
     }
 
-    private Boolean isNumber(String round) {
+    private static Boolean isNumber(String round) {
         try {
             Integer.parseInt(round);
             return true;
