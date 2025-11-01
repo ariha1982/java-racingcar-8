@@ -1,8 +1,8 @@
-package racingcar;
+package racingcar.model;
 
 public class Car {
     private String name;
-    private int movement;
+    private Integer movement;
 
     public Car (String name) {
         this.name = name;
@@ -11,5 +11,13 @@ public class Car {
 
     public void moveForward() {
         this.movement++;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getMovement() {
+        return movement;
     }
 }
